@@ -88,6 +88,34 @@ open class CardsCollectionViewLayout: UICollectionViewLayout {
   override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
     return true
   }
+   public func moveToPage(position:Int){
+        let totalPage = collectionView.contentOffset.x/collectionView.frame.width// getting totalNumberOfPage
+        if position < Int(totalPage){
+            scrollToPage(page: position, animated: true)
+        }
+    }
+    public  func moveToNextPage()->Int{
+            let pageIndex = round(collectionView.contentOffset.x/collectionView.frame.width)
+            let pageNo = Int(pageIndex+1)
+            scrollToPage(page: pageNo, animated: true)
+            return pageNo
+    }
+    public  func moveToPreviousPage()->Int{
+            let pageIndex = round(collectionView.contentOffset.x/collectionView.frame.width)
+            let pageNo = Int(pageIndex-1)
+            scrollToPage(page: pageNo, animated: true)
+            return pageNo
+    }
+           
+        
+    func scrollToPage(page: Int, animated: Bool) {
+        var frame: CGRect = self.collectionView.frame
+        frame.origin.x = frame.size.width * CGFloat(page)
+        frame.origin.y = 0
+        self.collectionView.scrollRectToVisible(frame, animated: animated)
+    }
+  
+  
 }
 
 
